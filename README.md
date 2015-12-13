@@ -1,9 +1,21 @@
 ### Installing
 ```
-$ git clone https://github.com/schacon/ticgit
-$ cd LISB
+$ git clone https://github.com/dylanmm/LISB.git
+$ cd LISB/
 ```
 ### Running
+**Makefile**
+```
+CC=gcc
+
+target:
+	bison LISB.bison
+	flex LISB.flex
+	$(CC) -std=gnu99 -o LISB main.c flex.c bison.c ast.c symtab.c
+clean:
+	rm flex.c flex.h bison.c bison.h LISB ast.dot ast.png
+```
+** NOTE: ** I'm using Flex 2.5.39 and Bison 3.0.2, symlinked flex and bison respectively. (You may have bison symlinked as bison3).
 ```
 $ make
 $ ./LISB path/to/file.lb
@@ -62,6 +74,7 @@ The heart of the language is lists. A list begins with an opening bracket, `[`, 
 The `pgrm` rule is my way of handling more than one list not contained within each other. `[1 2] [3 4]` then translates to an AST that looks like:
 
 ![alt text](https://cdn.pbrd.co/images/2PZz6O5P.png)
+
 This list of lists is recursive, so there can end up being lists of lists pointing to lists etc.
 
 #### Semantic Analysis
