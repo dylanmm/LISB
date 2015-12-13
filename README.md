@@ -45,7 +45,9 @@ Here is the grammar straight from the flex file, LISB.flex:
 "#".*   { /* ignore whitespaces */ }
 %%
 ```
-Every token is either a string (STRING) or an integer (NUMBER). Other language examples implement reserved words like 'IF' or 'THEN', as a separate token types, but as I was creating a language with more complicated features I wanted to keep the lexical analysis and syntax parsing as simple as possible. A **STRING** can be any number of letters (no numbers included). Single characters and common operators, like '+', '-', and '<', are all string tokens. LISB doesn't support floating point type, so any **NUMBER** can only be an integer. LISB is not whitespace sensitive. All whitespace, including newlines, are ignored.
+Every token is either a string (STRING) or an integer (NUMBER). Other language examples implement reserved words like 'IF' or 'THEN', as a separate token types. As I was creating a language with more complicated features, I wanted to keep the lexical analysis and syntax parsing as simple as possible. 
+
+A **STRING** can be any number of letters (no numbers included). Single characters and common operators, like '+', '-', and '<', are all string tokens. LISB doesn't support floating point type, so any **NUMBER** can only be an integer. LISB is not whitespace sensitive. All whitespace, including newlines, are ignored.
 
 #### Syntax Parsing
 The Bison BNF from LISB.bison:
@@ -67,7 +69,7 @@ atom : STRING { $$ = add_str($1); }
 
 %%
 ```
-If you ignored my AST building functions, changed the bracket tokens to parentheses, and added a few declarations to the flex file before; this grammar would parse common LISP as well. As you can see, this grammar is worlds different from my BASICD calculator language's. 
+If you ignored my AST building functions, changed the bracket tokens to parentheses, and added a few declarations to the flex file before; this grammar would parse common LISP as well. As you can see, this grammar is worlds different from my [BASICD](https://github.com/dylanmm/basicd) calculator language's. 
 
 The heart of the language is lists. A list begins with an opening bracket, `[`, and ends with a closing bracket `]`. Inside the brackets, or 'list', can be any number of strings, numbers, or other lists, in any order.
 
