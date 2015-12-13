@@ -121,5 +121,10 @@ The syntax before means any of the following is also valid:
 | +  | [+ 1 2] | 3 | |
 | -  | [- 2 1] | 1 | |
 | *  | [* 2 1] | 2 | |
-| SET  | [SET x 7] | 1  | adds x to symbol table with value 1, the function itself returns 1 on completion|
-| PRINT  | [PRINT x 1] | 1  | |
+| == | [== 3 5] | 0 | Compares two arguments, returns 0 if false, 1 if true. |
+| > | [> 3 5] | 0 | returns 0 if false, 1 if true. |
+| < | [< 3 5] | 1 | returns 0 if false, 1 if true. |
+| SET  | [SET x 7] | 1  | adds x to symbol table with value 7. The function call itself returns 1 on completion|
+| PRINT  | [PRINT x 3] | 1  | Outputs 3 to the terminal, the function completion returns 1. |
+| IF  | [IF [2] [4]] | 1  | If the first argument evaluates to > 0, then the second argument is then evaluates |
+|   | [IF [< 3 5] [PRINT 1]] | 1  | Outputs 1 to the terminal because 3 < 5. |
