@@ -79,11 +79,21 @@ The `pgrm` rule is my way of handling more than one list not contained within ea
 
 This list of lists is recursive, so there can end up being lists of lists pointing to lists etc.
 
-Browsing through the code, you'll notice a lot of Bison specific updates as well from BASICD. The main thing you might pick up on is nothing being passed to `yyparse()`. That's right, the rootnode of the AST is now a global variable that I extern to. In my research for passing in a symbol table struct, I reread the Bison docs for yyparse() and realized adding parameters to it was for the benefit of reentrant parsers. LISB is non-reentrant, so I can stick with globals. The benefit of reentrant parsers is that they call start a subroutine of themselves to parse languages within languages, like HTML mixed with Javascript. For my purposes, reentrant parsers don't necessarily provide any computational benefits. Furthermore, creating a pure reentrant parser with the Flex/Bison tool chain adds an extra layer of complication that forces you into a a very undocumented corner. 
+Browsing through the code, you'll notice a lot of Bison specific updates as well from BASICD. The main thing you might pick up on is nothing being passed to `yyparse()`. That's right, the rootnode of the AST is now a global variable that I extern to. In my research for passing in a symbol table struct, I reread the Bison docs for yyparse() and realized adding parameters to it was for the benefit of reentrant parsers. LISB is non-reentrant, so I can stick with globals. The benefit of reentrant parsers is that they can start a subroutine of themselves to parse languages within languages, like HTML mixed with Javascript. For my purposes, reentrant parsers don't necessarily provide any computational benefits. Furthermore, creating a pure reentrant parser with the Flex/Bison tool chain adds an extra layer of complication that forces you into a a very undocumented corner. 
 
 #### Semantic Analysis
 Semantic analysis, also context sensitive analysis, is a process in compiler construction, usually after syntax parsing, to gather necessary semantic information from the source code. It usually includes type checking, or makes sure a variable is declared before use which is impossible to detect in parsing. Most simple calculator languages, like my BASICD repo, implement semantic analysis while syntax parsing happens in Bison. With the addition of variables and function declaration, I've moved semantic parsing unto its own step (as it is usually described in theory).
 
-*Everything is a function.. technically.* The syntax for LISB is very simple, everything is a "list". I evaluate with the theory that every list is a function. Every function must be encompassed by and opening and closing bracket, giving it the lisp appearance. Every function only requires it's return value to be defined. To explain, let's look at the simplest list: `[0]`. This is an unnamed function that returns zero.
+*Everything is a function.* The syntax for LISB is very simple, everything is a "list". I evaluate with the theory that every list is a function. 
+
+The semantics I'm checking for are:
+``` [functionName argone argtwo argthree returnfunction] ```
+The meat of my analysis is in the `eval` function in `symtab.c`. In the eval function I'm checking if the node to the left is a string, If it is, is it a variable or function? If it is defined, return it's integer value. If the string is not a previously defined variable or function an error is thrown. 
+
+The I'm using the words "argument" and "returnFunction" in the example above, however remember everything is a function, and so those arguments can be functions themselves. Lists within lists within lists. `functionName` is also not required. Every function only requires it's return value to be defined. To explain, let's look at the simplest list: `[0]`. This is an unnamed function that returns zero.
 
 A return value is the right-most item in a list. `[0 1 3 4]`, returns 4.
+
+However if there is a function name defined, the remaining list's are then arguments to it.
+```[+ 1 3]``` returns 4 as well. 
+```[+ 1 [+ 1 3]]``` returns 5.
