@@ -116,9 +116,6 @@ The syntax before means any of the following is also valid:
 In this integer language what does PRINT return? It returns 1 on successful completion. Other predefined functions that do something and just return 1 are: `SET`, `IF`, and `DEF`.
 
 
-
-
-
 ### Predefined functions
 | **Function** |  **Example** |  **return** | extra |
 | ------------ |:-----------------|:-----------:| :-------------------------------: |
@@ -133,3 +130,5 @@ In this integer language what does PRINT return? It returns 1 on successful comp
 | PRINT  | [PRINT x 3] | 1  | Outputs 3 to the terminal, the function completion returns 1. |
 | IF  | [IF [2] [4]] | 1  | If the first argument evaluates to > 0, then the second argument is then evaluates |
 |   | [IF [< 3 5] [PRINT 1]] | 1  | Outputs 1 to the terminal because 3 < 5. |
+| LOOP  | [LOOP 2 [PRINT 1]] | 1 1 | Will loop the second argument, equal to the number of times of the second argument|
+|   | [LOOP [+ 1 1] [PRINT 1]] | 1 1 | |
