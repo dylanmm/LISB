@@ -15,16 +15,16 @@ target:
 clean:
 	rm flex.c flex.h bison.c bison.h LISB ast.dot ast.png
 ```
-** NOTE: ** I'm using Flex 2.5.39 and Bison 3.0.2, symlinked flex and bison respectively. (You may have bison symlinked as bison3).
+**NOTE:** I'm using Flex 2.5.39 and Bison 3.0.2, symlinked flex and bison respectively. (You may have bison symlinked as bison3).
 ```
 $ make
 $ ./LISB path/to/file.lb
 ```
 
 # LISB
-**Lots of Irritating Superfluous Brackets** a.k.a an overly complicated way to implement the Nth Fibonacci number.
+**Lots of Irritating Superfluous Brackets**, or as I like to refer to it, an overly complicated way to implement the Nth Fibonacci number.
 
-LISB is an example calculator compiler using the Flex/Bison tool stack. It is LISP-like in syntax, and was created for just evaluating integer math. Internally, an AST is created from Bison, and traversed to populate symbol tables with variable declarations and user-defined functions, and then evaluated.
+LISB is an example compiler written in C, using the Flex/Bison tool stack. It is LISP-like in syntax, and was created for just evaluating integer math. Internally, an AST is created from Bison, and traversed to populate symbol tables with variable declarations and user-defined functions, and then evaluated.
 
 #### Lexical Analysis
 Here is the grammar straight from the flex file, LISB.flex:
