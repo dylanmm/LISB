@@ -103,7 +103,7 @@ void set_args(symbolTable* fnp, struct astnode* astp, symbolTable* global) {
 				exit(0);
 			}
     	} else {
-    		set_args(fnp, astp->right, global);
+    		set_args(fnp, astp->left, global);
     		set_args(fnp, astp->right, global);
     	} 
     }
@@ -146,6 +146,7 @@ int fn_call(symbolTable* fnc, struct astnode* args, symbolTable* global) {
 	// GET ARGUMENTS
 	symbolTable* arglist = (symbolTable *)malloc(sizeof(symbolTable));
 	set_args(arglist,args,global);
+	//print_st(arglist);
 	int paramcount = count_list(fnc->params);
 	int argcount = count_list(arglist);
 
