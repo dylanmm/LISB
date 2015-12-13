@@ -1,8 +1,8 @@
 CC=gcc
 
 target:
-	bison basicd.bison
-	flex basicd.flex
-	$(CC) -std=gnu99 -o basicd main.c flex.c bison.c ast.c symtab.c
+	bison LISB.bison
+	flex LISB.flex
+	$(CC) -std=gnu99 -o LISB main.c flex.c bison.c ast.c symtab.c
 clean:
-	rm flex.c flex.h bison.c bison.h basicd ast.dot ast.png
+	rm flex.c flex.h bison.c bison.h LISB ast.dot ast.png
