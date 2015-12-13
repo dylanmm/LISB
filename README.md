@@ -61,7 +61,7 @@ The heart of the language is lists. A list begins with an opening bracket, `[`, 
 
 The `pgrm` rule is my way of handling more than one list not contained within each other. `[1 2 3] [9 8 7]` then translates to an AST that looks like:
 
-![alt text][https://cdn.pbrd.co/images/2PZz6O5P.png]
+![alt text](https://cdn.pbrd.co/images/2PZz6O5P.png)
 
 
 #### Semantic Analysis
