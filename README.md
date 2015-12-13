@@ -116,6 +116,6 @@ The syntax before means any of the following is also valid:
 ```
 
 
-| **Function** | **Descs** |  **Example** |
-| ------------------- |:-----------------------------:|:-------:|
-| col 3 is        | right-aligned     | $1600   |
+| **Function** | **Descs** |  **Example** |  **return** |
+| ------------------- |:-----------------------------|:-------:||:-------:|
+| + | The addition function, takes two arguments and returns the sum  | [+ 1 2]   | 3 |
