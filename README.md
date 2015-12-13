@@ -121,5 +121,5 @@ The syntax before means any of the following is also valid:
 | +  | [+ 1 2] | 3 | |
 | -  | [- 2 1] | 1 | |
 | *  | [* 2 1] | 2 | |
-| SET  | [SET x 7] | 1  | |
+| SET  | [SET x 7] | 1  | adds x to symbol table with value 1, the function itself returns 1 on completion|
 | PRINT  | [PRINT x 1] | 1  | |
