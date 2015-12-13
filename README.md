@@ -91,7 +91,7 @@ The semantics I'm checking for are:
 ``` [functionName argone argtwo argthree returnfunction] ```
 The meat of my analysis is in the `eval` function in `symtab.c`. In the eval function I'm checking if the node to the left is a string, If it is, is it a variable or function? If it is defined, return it's integer value. If the string is not a previously defined variable or function an error is thrown. 
 
-The I'm using the words "argument" and "returnFunction" in the example above, however remember everything is a function, and so those arguments can be functions themselves. Lists within lists within lists. `functionName` is also not required. Every function only requires it's return value to be defined. To explain, let's look at the simplest list: `[0]`. This is an unnamed function that returns zero.
+The I'm using the words "argument" and "returnFunction" in the example above, however remember everything is a function, and so those arguments can be functions themselves. Lists within lists within lists. `functionName` is also not required. Every function only requires its return value to be defined. To explain, let's look at the simplest list: `[0]`. This is an unnamed function that returns zero. Numbers are just functions that return themselves.
 
 A return value is the right-most item in a list. `[0 1 3 4]`, returns 4.
 
