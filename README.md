@@ -20,6 +20,7 @@ clean:
 $ make
 $ ./LISB path/to/file.lb
 ```
+LISB expects one parameter, a path to a `.lb` file to evaluate. Examples are included in the `tests/` directory. LISB will evaluate, and then print the global symbol table.
 
 # LISB
 **Lots of Irritating Superfluous Brackets**, or as I like to refer to it, an overly complicated way to implement the Nth Fibonacci number.
@@ -97,3 +98,24 @@ A return value is the right-most item in a list. `[0 1 3 4]`, returns 4.
 However if there is a function name defined, the remaining list's are then arguments to it.
 ```[+ 1 3]``` returns 4 as well. 
 ```[+ 1 [+ 1 3]]``` returns 5.
+
+The syntax before means any of the following is also valid:
+```
+[[1] [2] [3]]
+[[[0]]]
+[+ 1 [3]]
+```
+`+` is a reserved function name in LISB. There are others, and I will provide a table of them at the bottom. If you run the code above, you may notice there is no output. LISB functions return values, but that doesn't mean they output to the terminal. The function `PRINT` is the only way to output a function's return.
+
+```
+[PRINT [+ 1 [+ 1 [3]]]]
+[PRINT [+ 1 [3]]]
+[PRINT [3]]
+[PRINT 7]
+
+```
+
+
+| **Function**        | ***Example**           | Descs  |
+| --------------- |:-----------------:|:-------:|
+| col 3 is        | right-aligned     | $1600   |
