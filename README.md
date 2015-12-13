@@ -55,12 +55,12 @@ atom : STRING { $$ = add_str($1); }
 
 %%
 ```
-If you ignored my AST building functions, changed the bracket tokens to parentheses, and added a few declarations to the flex file before; this grammar would parse common LISP as well. As you can see, this grammar is world's different from my BASICD calculator language's. 
+If you ignored my AST building functions, changed the bracket tokens to parentheses, and added a few declarations to the flex file before; this grammar would parse common LISP as well. As you can see, this grammar is worlds different from my BASICD calculator language's. 
 
 The heart of the language is lists. A list begins with an opening bracket, `[`, and ends with a closing bracket `]`. Inside the brackets, or 'list', can be any number of strings, numbers, or other lists, in any order.
 
 The `pgrm` rule is my way of handling more than one list not contained within each other. `[1 2 3] [9 8 7]` then translates to an AST that looks like:
-http://pasteboard.co/2PZz6O5P.png
+https://cdn.pbrd.co/images/2PZz6O5P.png
 
 
 #### Semantic Analysis
