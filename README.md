@@ -71,7 +71,7 @@ atom : STRING { $$ = add_str($1); }
 ```
 If you ignored my AST building functions, changed the bracket tokens to parentheses, and added a few declarations to the flex file before; this grammar would parse common LISP as well. As you can see, this grammar is worlds different from my [BASICD](https://github.com/dylanmm/basicd) calculator language's. 
 
-The heart of the language is lists. A list begins with an opening bracket, `[`, and ends with a closing bracket `]`. Inside the brackets, or 'list', can be any number of strings, numbers, or other lists, in any order.
+The heart of the language is lists. A list begins with an opening bracket, `[`, and ends with a closing bracket `]`. Inside the brackets, or 'list', can be any number of strings, numbers, or other lists, in any order. Unlike LISP, I require a list to contain at least *something*, for reasons discussed in semantic analysis.
 
 The `pgrm` rule is my way of handling more than one list not contained within each other. `[1 2] [3 4]` then translates to an AST that looks like:
 
@@ -79,9 +79,11 @@ The `pgrm` rule is my way of handling more than one list not contained within ea
 
 This list of lists is recursive, so there can end up being lists of lists pointing to lists etc.
 
+Browsing through the code, you'll notice a lot of Bison specific updates as well from BASICD. The main thing you might pick up on is nothing being passed to `yyparse()`. That's right, the rootnode of the AST is now a global variable that I extern to. In my research for passing in a symbol table struct, I reread the Bison docs for yyparse() and realized adding parameters to it was for the benefit of reentrant parsers. LISB is non-reentrant, so I can stick with globals. The benefit of reentrant parsers is that they call start a subroutine of themselves to parse languages within languages, like HTML mixed with Javascript. For my purposes, reentrant parsers don't necessarily provide any computational benefits. Furthermore, creating a pure reentrant parser with the Flex/Bison tool chain adds an extra layer of complication that forces you into a a very undocumented corner. 
+
 #### Semantic Analysis
-Semantic analysis, also context sensitive analysis, is a process in compiler construction, usually after syntax parsing, to gather necessary semantic information from the source code. It usually includes type checking, or makes sure a variable is declared before use which is impossible to detect in parsing. Most simple calculator languages, like my BASICD repo, implement semantic analysis while syntax parsing in Bison. With the addition of variables and function declaration, I've moved semantic parsing unto its own step (as it is usually described in theory).
+Semantic analysis, also context sensitive analysis, is a process in compiler construction, usually after syntax parsing, to gather necessary semantic information from the source code. It usually includes type checking, or makes sure a variable is declared before use which is impossible to detect in parsing. Most simple calculator languages, like my BASICD repo, implement semantic analysis while syntax parsing happens in Bison. With the addition of variables and function declaration, I've moved semantic parsing unto its own step (as it is usually described in theory).
 
-Lexically, LISB ignores whitespace, and recognizes strings and integers. Single characters and common operators, like '+', '-', and '<', are all string tokens. The syntax for LISB is very simple, everything is a "list", or function. Every function must be encompassed by and opening and closing bracket, giving it the lisp appearance. Every function only requires it's return value to be defined. To explain, let's look at the simplest list: `[0]`. This is an unnamed function that returns zero.
+*Everything is a function.. technically.* The syntax for LISB is very simple, everything is a "list". I evaluate with the theory that every list is a function. Every function must be encompassed by and opening and closing bracket, giving it the lisp appearance. Every function only requires it's return value to be defined. To explain, let's look at the simplest list: `[0]`. This is an unnamed function that returns zero.
 
-A return value is the right-most item in a list. `[0 1 3 4]`, returns 4.*Everything is a function.. technically.* 
+A return value is the right-most item in a list. `[0 1 3 4]`, returns 4.
