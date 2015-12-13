@@ -1,0 +1,6 @@
+[DEF foo [x h] [SET i 3] [+ x 1] [i]]
+[SET j 4]
+[SET j 5]
+
+
+[LOOP 3 [PRINT [foo 1 j]]]
