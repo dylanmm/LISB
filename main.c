@@ -6,14 +6,16 @@
 
 
 
-int main(int argc, char **argv) {		
+int main(int argc, char **argv) {	
 	// SYMBOL TABLE	
-	symbolTable * gscope = (symbolTable * )malloc(sizeof(symbolTable));
+	symbolTable * gscope = malloc(sizeof(symbolTable));
+	gscope->next = NULL;
 
+	// yyin Defined in flex.h: extern FILE *yyin, *yyout;
 	yyin = fopen(argv[1], "r");
 
 	if (yyin == NULL) {
-		puts("No source file (.bd) given");
+		puts("No source file given or found");
 		exit(0);
 	} 
 
@@ -28,5 +30,5 @@ int main(int argc, char **argv) {
 	puts("\nGlobal Symbol Table:");
 	print_st(gscope);
 
-  	//raphviz(rootnode);
+  	//graphviz(rootnode);
 }

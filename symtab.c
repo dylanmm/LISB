@@ -26,11 +26,10 @@ void add_var(symbolTable* symtab, char* symbol, int value){
 symbolTable* find_var(symbolTable* symtab, char* symbol){
 
 symbolTable *cur = symtab;
-	while(cur->next !=NULL)
+	while(cur->next != NULL)
 	{
 		cur = cur->next;
 		if (strcmp(cur->symbol, symbol) == 0) {
-			cur->next == NULL;
 			return(cur);
 		}
 	}
@@ -134,13 +133,13 @@ void set_args(symbolTable* fnp, struct astnode* astp, symbolTable* global) {
 }
 
 void print_st(symbolTable* symboltable){
-    symbolTable* current = symboltable->next;
-    while (current != NULL) {
+	    symbolTable* current = symboltable->next;
+	    while (current != NULL) {
 
-        printf("%s %d\n",current->symbol, current->value);
+	        printf("%s %d\n",current->symbol, current->value);
 
-        current = current->next;
-    }
+	        current = current->next;
+	    }
 }
 
 int fn_call(symbolTable* fnc, struct astnode* args, symbolTable* global) {
@@ -174,15 +173,15 @@ int fn_call(symbolTable* fnc, struct astnode* args, symbolTable* global) {
 	  	curr->next->symbol = fnc->symbol;
 	  	curr->next->fnptr = fnc->fnptr;
 	  	curr->next->params = fnc->params;
-		curr->next->next = NULL;
 
 		// EVAL FUNCTION
 		return eval(fnscope,fnc->fnptr);
-	} 
-
+	}
+	return 1;
 }
 
 int eval(symbolTable* ST, node* n) {
+
 	if (n->type == PGRM) {
 		eval(ST,n->left);
 		eval(ST,n->right);
@@ -261,4 +260,5 @@ int eval(symbolTable* ST, node* n) {
 		}
 		return 1;
 	}
+	return 1;
 }

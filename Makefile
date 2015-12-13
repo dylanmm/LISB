@@ -1,7 +1,7 @@
 CC=gcc
 
 target:
-	bison LISB.bison
+	bison3 LISB.bison
 	flex LISB.flex
 	$(CC) -std=gnu99 -o LISB main.c flex.c bison.c ast.c symtab.c
 clean:

@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <malloc.h>
 
 enum stnodetype {VAR, FNC};
 
