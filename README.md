@@ -116,6 +116,6 @@ The syntax before means any of the following is also valid:
 ```
 
 
-| **Function**        | ***Example**           | Descs  |
-| -- |:----:|:-----:|
+| **Function** | **Descs** |  **Example** |
+| ------------------- |:-----------------------------:|:-------:|
 | col 3 is        | right-aligned     | $1600   |
