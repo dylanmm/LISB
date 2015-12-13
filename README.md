@@ -115,7 +115,6 @@ The syntax before means any of the following is also valid:
 ```
 In this integer language what does PRINT return? It returns 1 on successful completion. Other predefined functions that do something and just return 1 are: `SET`, `IF`, and `DEF`.
 
-
 ### Predefined functions
 | **Function** |  **Example** |  **return** | extra |
 | ------------ |:-----------------|:-----------:| :-------------------------------: |
@@ -132,3 +131,74 @@ In this integer language what does PRINT return? It returns 1 on successful comp
 |   | [IF [< 3 5] [PRINT 1]] | 1  | Outputs 1 to the terminal because 3 < 5. |
 | LOOP  | [LOOP 2 [PRINT 1]] | 1 1 | Will loop the second argument, equal to the number of times of the second argument|
 |   | [LOOP [+ 1 1] [PRINT 1]] | 1 1 | |
+
+These predefined functions are checked for in the eval method as well.
+
+### Scope
+Creating this language has been a lot of work. The main hurdle was implementing variables and functions (in a general sense). I know I said everything is a function before, but I'm using the words variable and functions in the pragmatic term. To keep track of variables/functions and their values I use a pretty generic link list as a symbol table. The global scope, and every function's scope is an initialized symbol table.
+
+Defined in `symtab.h`:
+```
+enum stnodetype {VAR, FNC};
+
+typedef struct symtab {
+	enum stnodetype type;
+	char* symbol;
+	int value;
+	struct astnode* fnptr;
+	struct symtab* params;
+	struct symtab* next;
+} symbolTable;
+```
+This struct stores both variables and functions, acting as a scope. When adding a variable or function, I donate an entry in the list as VAR or FNC respectively. A variable is stored as the symbol (a string) and its int value. `[SET thisisavar 1]` adds symbol 'thisisavar' to the symbol table with a value of 1.
+
+A function in the symbol table has a value of 0. `fnptr` is a pointer to the AST node after its parameter declaration. 
+
+So if you define a function:`[DEF foo [n] [+ n 2] [+ n 5] [+ n 2] [n]]`, fnptr points to `[+ n 2] [+ n 5] [+ n 2] [n]` so it can be executed every function call. `params` is another symbol table keeping track of parameters required by a function. In the function above it would just list `n`. 
+
+When a function is call, a lot happens.
+```
+int fn_call(symbolTable* fnc, struct astnode* args, symbolTable* global) {
+	// GET ARGUMENTS
+	symbolTable* arglist = (symbolTable *)malloc(sizeof(symbolTable));
+	set_args(arglist,args,global);
+	int paramcount = count_list(fnc->params);
+	int argcount = count_list(arglist);
+
+	// CHECK PARAMS VS. ARGS
+	if(argcount < paramcount || argcount > paramcount) {
+		printf("ERROR: %s exepecting %i arguments, but %i given.\n", fnc->symbol,paramcount,argcount);
+		exit(0);
+	} else {
+		// SET PARAMS == ARGS
+		symbolTable* fnscope = (symbolTable *)malloc(sizeof(symbolTable));
+		symbolTable* currparam = fnc->params->next;
+		symbolTable* currarg = arglist->next;
+	    while (currparam != NULL) {
+	    	add_var(fnscope,currparam->symbol,currarg->value);
+	        currparam->value = currarg->value;
+	        currparam = currparam->next;
+	        currarg = currarg->next;
+	    }
+	    // ADD SELF TO SCOPE
+	    symbolTable * curr = fnscope;
+	    while (curr->next != NULL) {
+	        curr = curr->next;
+	    }
+    	curr->next = malloc(sizeof(symbolTable));
+	    curr->next->type = FNC;
+	  	curr->next->symbol = fnc->symbol;
+	  	curr->next->fnptr = fnc->fnptr;
+	  	curr->next->params = fnc->params;
+		curr->next->next = NULL;
+
+		// EVAL FUNCTION
+		return eval(fnscope,fnc->fnptr);
+	} 
+
+}
+```
+
+Every function call has the preceding scope (symbol table) passed into it. First the arguments provided are transferred from AST form to a link list (symbol table). During that process each argument is eval-ed so variables and other functions passed as arguments are evaluated to integers. The parameters and arguments are compared to be the same size and then mapped together into a list, the function scope. Lastly the function itself is added to the function scope as to support recursion. Then the scope and AST the fncptr points to are evaluated, and the resulting value returned. Every function call, the variables are initialized and that branch of the overall AST evaluated.
+
+Functions don't have access to declarations outside their own scope without passing them in as arguments. A function's parameter [n] is a different [n] then one declared outside. There are more examples of this in the `test/` directory.

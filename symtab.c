@@ -161,7 +161,6 @@ int fn_call(symbolTable* fnc, struct astnode* args, symbolTable* global) {
 		symbolTable* currarg = arglist->next;
 	    while (currparam != NULL) {
 	    	add_var(fnscope,currparam->symbol,currarg->value);
-	        currparam->value = currarg->value;
 	        currparam = currparam->next;
 	        currarg = currarg->next;
 	    }
