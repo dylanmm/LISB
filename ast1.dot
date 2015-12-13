@@ -1,0 +1,8 @@
+digraph tree {
+ pgrm->list0
+ pgrm->list1
+ list0->1
+ list0->2
+ list1->3
+ list1->4
+}
