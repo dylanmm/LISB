@@ -59,10 +59,10 @@ If you ignored my AST building functions, changed the bracket tokens to parenthe
 
 The heart of the language is lists. A list begins with an opening bracket, `[`, and ends with a closing bracket `]`. Inside the brackets, or 'list', can be any number of strings, numbers, or other lists, in any order.
 
-The `pgrm` rule is my way of handling more than one list not contained within each other. `[1 2 3] [9 8 7]` then translates to an AST that looks like:
+The `pgrm` rule is my way of handling more than one list not contained within each other. `[1 2] [3 4]` then translates to an AST that looks like:
 
 ![alt text](https://cdn.pbrd.co/images/2PZz6O5P.png)
-
+This list of lists is recursive, so there can end up being lists of lists pointing to lists etc.
 
 #### Semantic Analysis
 Semantic analysis, also context sensitive analysis, is a process in compiler construction, usually after syntax parsing, to gather necessary semantic information from the source code. It usually includes type checking, or makes sure a variable is declared before use which is impossible to detect in parsing. Most simple calculator languages, like my BASICD repo, implement semantic analysis while syntax parsing in Bison. With the addition of variables and function declaration, I've moved semantic parsing unto its own step (as it is usually described in theory).
