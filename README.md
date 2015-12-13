@@ -117,5 +117,5 @@ The syntax before means any of the following is also valid:
 
 
 | **Function**        | ***Example**           | Descs  |
-| --------------- |:-----------------:|:-------:|
+| -- |:----:|:-----:|
 | col 3 is        | right-aligned     | $1600   |
