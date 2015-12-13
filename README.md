@@ -112,10 +112,14 @@ The syntax before means any of the following is also valid:
 [PRINT [+ 1 [3]]]
 [PRINT [3]]
 [PRINT 7]
-
 ```
+In this integer language what does PRINT return? It returns 1 on successful completion. Other predefined functions that do something and just return 1 are: `SET`, `IF`, and `DEF`.
 
 
+
+
+
+### Predefined functions
 | **Function** |  **Example** |  **return** | extra |
 | ------------ |:-----------------|:-----------:| :-------------------------------: |
 | +  | [+ 1 2] | 3 | |
@@ -125,6 +129,7 @@ The syntax before means any of the following is also valid:
 | > | [> 3 5] | 0 | returns 0 if false, 1 if true. |
 | < | [< 3 5] | 1 | returns 0 if false, 1 if true. |
 | SET  | [SET x 7] | 1  | adds x to symbol table with value 7. The function call itself returns 1 on completion|
+| DEF  | [DEF foo [x y][+ x y]] | 1  | Adds a new function 'foo' to the scope's symbol table, with parameters x and y. It returns the sum of x and y when called there after. |
 | PRINT  | [PRINT x 3] | 1  | Outputs 3 to the terminal, the function completion returns 1. |
 | IF  | [IF [2] [4]] | 1  | If the first argument evaluates to > 0, then the second argument is then evaluates |
 |   | [IF [< 3 5] [PRINT 1]] | 1  | Outputs 1 to the terminal because 3 < 5. |
