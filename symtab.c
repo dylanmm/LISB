@@ -136,7 +136,11 @@ void print_st(symbolTable* symboltable){
 	    symbolTable* current = symboltable->next;
 	    while (current != NULL) {
 
-	        printf("%s %d\n",current->symbol, current->value);
+	    	if (current->type == FNC){
+	       		printf("FNC: %s \n",current->symbol);
+	    	} else {
+	        	printf("VAR: %s == %d\n",current->symbol, current->value);
+	    	}
 
 	        current = current->next;
 	    }
@@ -261,5 +265,5 @@ int eval(symbolTable* ST, node* n) {
 		}
 		return 1;
 	}
-	return 1;
+	return 0;
 }

@@ -57,30 +57,6 @@
 [LOOP [+ 1 1] [PRINT 1337]]
 
 
-# Print 1 - 10
-[SET counter 1]
-[LOOP 10 
-	[PRINT counter]
-	[SET counter [+ counter 1]]]
-
-[DEF addthree [x y z] [+ x [+ y z]]]
-[PRINT 
-[addthree 1 2 3]]
-
-
-# Positive exponents
-[DEF expnt [number exponenet] 
-	[SET ret 1]
-	[LOOP exponenet
-		[SET ret [* ret number]]]
-	[IF [== ret 0] [SET ret 1]]
-	[ret]]
-
-[SET counter 1]
-[LOOP 10 
-	[PRINT [expnt 2 counter]]
-	[SET counter [+ counter 1]]]
-
 
 
 

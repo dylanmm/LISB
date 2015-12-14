@@ -10,7 +10,6 @@
 
 [SET j 0]
 
-[LOOP 12 
-	[IF [> j 1] 
-		[PRINT [fib j]]]
+[LOOP 10 
+	[PRINT [fib j]]
 	[SET j [+ j 1]]]
